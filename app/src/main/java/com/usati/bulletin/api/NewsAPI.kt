@@ -17,7 +17,7 @@ interface NewsAPI {
         apiKey: String = API_KEY
     ): Response<NewsResponse>
 
-    @GET("v2/everthiing")
+    @GET("v2/everything")
     suspend fun searchNews(
         @Query("q")
         searchQuery: String,

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/breakingNewsFragment"
-        android:name="com.usati.bulletin.ui.fragments.BreakingTopFragment"
+        android:name="com.usati.bulletin.ui.fragments.TopNewsFragment"
         android:label="BreakingNewsFragment" >
         <action
             android:id="@+id/action_breakingNewsFragment_to_articleNewsFragment"
