@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.usati.bulletin.R
 import com.usati.bulletin.adapter.NewsAdapter
@@ -30,20 +30,30 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleNewsFragment,
+                bundle
+            )
+        }
+
         var job: Job? = null
         etSearch.addTextChangedListener{ editable ->
             job?.cancel()
             job = MainScope().launch {
                 delay(SEARCH_TIME_DELAY)
                 editable?.let{
-                    if (editable.toString().isEmpty()){
+                    if (editable.toString().isNotEmpty()){
                         viewModel.searchNews(editable.toString())
                     }
                 }
             }
         }
 
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer{ response ->
+        viewModel.searchNews.observe(viewLifecycleOwner, { response ->
             when(response){
                 is Resource.Success -> {
                     hideProgressBar()

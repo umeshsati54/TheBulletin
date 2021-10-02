@@ -31,7 +31,11 @@
     <fragment
         android:id="@+id/articleNewsFragment"
         android:name="com.usati.bulletin.ui.fragments.ArticleNewsFragment"
-        android:label="ArticleNewsFragment" />
+        android:label="ArticleNewsFragment" >
+        <argument
+            android:name="article"
+            app:argType="com.usati.bulletin.models.Article" />
+    </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
         android:name="com.usati.bulletin.ui.fragments.SearchNewsFragment"

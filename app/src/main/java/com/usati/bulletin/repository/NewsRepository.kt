@@ -2,6 +2,7 @@ package com.usati.bulletin.repository
 
 import com.usati.bulletin.api.RetrofitInstance
 import com.usati.bulletin.db.ArticleDatabase
+import com.usati.bulletin.models.Article
 import retrofit2.http.Query
 
 class NewsRepository(
@@ -12,4 +13,10 @@ class NewsRepository(
 
     suspend fun searchNews(searchQuery: String, pageNumber: Int) =
         RetrofitInstance.api.searchNews(searchQuery,pageNumber)
+
+    suspend fun upsert(article: Article) = db.getArticleDao().upsert(article)
+
+    fun getSavedNews() = db.getArticleDao().getAllArticles()
+
+    suspend fun delete(article: Article) = db.getArticleDao().delete(article)
 }
