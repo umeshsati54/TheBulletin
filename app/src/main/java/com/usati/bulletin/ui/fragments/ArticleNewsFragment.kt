@@ -2,6 +2,7 @@ package com.usati.bulletin.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ class ArticleNewsFragment : Fragment(R.layout.fragment_article) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = (activity as NewsActivity).viewModel
         val article = args.article
         webView.apply {
@@ -29,4 +31,5 @@ class ArticleNewsFragment : Fragment(R.layout.fragment_article) {
             Snackbar.make(view, "Article Saved", Snackbar.LENGTH_SHORT).show()
         }
     }
+
 }

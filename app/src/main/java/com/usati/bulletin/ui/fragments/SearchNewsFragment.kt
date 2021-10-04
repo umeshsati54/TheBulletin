@@ -2,9 +2,14 @@ package com.usati.bulletin.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +21,7 @@ import com.usati.bulletin.ui.NewsViewModel
 import com.usati.bulletin.utils.Constants
 import com.usati.bulletin.utils.Constants.Companion.SEARCH_TIME_DELAY
 import com.usati.bulletin.utils.Resource
+import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
 import kotlinx.android.synthetic.main.fragment_top_news.*
@@ -46,7 +52,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         }
 
         var job: Job? = null
-        etSearch.addTextChangedListener{ editable ->
+        /*etSearch.addTextChangedListener{ editable ->
             job?.cancel()
             job = MainScope().launch {
                 delay(SEARCH_TIME_DELAY)
@@ -55,6 +61,20 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                         viewModel.searchNewsResponse = null
                         viewModel.searchNewsPage = 1
                         viewModel.searchNews(editable.toString())
+                    }
+                }
+            }
+        }*/
+
+        etSearch.editText?.doOnTextChanged { text, start, before, count ->
+            job?.cancel()
+            job = MainScope().launch {
+                delay(SEARCH_TIME_DELAY)
+                text?.let{
+                    if (text.toString().isNotEmpty()){
+                        viewModel.searchNewsResponse = null
+                        viewModel.searchNewsPage = 1
+                        viewModel.searchNews(text.toString())
                     }
                 }
             }
@@ -125,7 +145,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
             if(shouldPaginate) {
-                viewModel.searchNews(etSearch.text.toString())
+                viewModel.searchNews(etSearch.editText?.text.toString())
                 isScrolling = false
             }
         }

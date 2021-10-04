@@ -2,10 +2,9 @@ package com.usati.bulletin.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.*
 import android.widget.AbsListView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +14,8 @@ import com.usati.bulletin.ui.NewsActivity
 import com.usati.bulletin.ui.NewsViewModel
 import com.usati.bulletin.utils.Constants.Companion.QUERY_PAGE_SIZE
 import com.usati.bulletin.utils.Resource
-import kotlinx.android.synthetic.main.fragment_search_news.*
+import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_top_news.*
-import kotlinx.android.synthetic.main.fragment_top_news.paginationProgressBar
 
 class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
 
@@ -28,6 +26,7 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
@@ -40,6 +39,8 @@ class TopNewsFragment : Fragment(R.layout.fragment_top_news) {
                 bundle
             )
         }
+
+
 
         viewModel.topNews.observe(viewLifecycleOwner, { response ->
             when(response){
