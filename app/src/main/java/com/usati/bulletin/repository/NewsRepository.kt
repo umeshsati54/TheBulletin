@@ -19,4 +19,6 @@ class NewsRepository(
     fun getSavedNews() = db.getArticleDao().getAllArticles()
 
     suspend fun delete(article: Article) = db.getArticleDao().delete(article)
+
+    suspend fun exists(title: String) : Boolean = db.getArticleDao().exists(title)
 }

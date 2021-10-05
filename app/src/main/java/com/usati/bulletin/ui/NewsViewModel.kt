@@ -3,11 +3,12 @@ package com.usati.bulletin.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.usati.bulletin.models.Article
 import com.usati.bulletin.models.NewsResponse
 import com.usati.bulletin.repository.NewsRepository
 import com.usati.bulletin.utils.Resource
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -48,6 +49,12 @@ class NewsViewModel(
     }
 
     fun getSavedNews() = newsRepository.getSavedNews()
+
+
+    suspend fun isNewsSaved(title: String): Boolean = coroutineScope  {
+        val b = async { newsRepository.exists(title) }
+        b.await()
+    }
 
 
     private fun handleTopNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse>{

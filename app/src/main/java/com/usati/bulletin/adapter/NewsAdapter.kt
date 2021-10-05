@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,9 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             tvTitle.text = article.title
             tvPublishedAt.text = article.publishedAt!!.split("T")[0]
             setOnClickListener {
-                onItemClickListener?.let { it(article) }
+                onItemClickListener?.let {
+                    it(article)
+                }
             }
         }
     }
